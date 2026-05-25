@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>健身瘦身计划 · 3个月冲刺版</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #0f172a; color: #e2e8f0; line-height: 1.6; padding: 20px; }
+  .container { max-width: 820px; margin: 0 auto; }
+  h1 { text-align: center; font-size: 28px; margin-bottom: 8px; color: #f8fafc; }
+  .subtitle { text-align: center; color: #f87171; margin-bottom: 6px; font-size: 15px; font-weight: 700; }
+  .subtitle2 { text-align: center; color: #94a3b8; margin-bottom: 30px; font-size: 13px; }
+  .profile { background: linear-gradient(135deg, #1e293b, #334155); border-radius: 12px; padding: 20px; margin-bottom: 24px; display: flex; gap: 24px; flex-wrap: wrap; justify-content: center; }
+  .profile-item { flex: 1; min-width: 90px; text-align: center; }
+  .profile-label { font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .profile-value { font-size: 20px; font-weight: 700; color: #38bdf8; }
+  .profile-value.warn { color: #fbbf24; }
+  .profile-value.target { color: #22c55e; }
+  .section { margin-bottom: 28px; }
+  .section-title { font-size: 17px; font-weight: 700; color: #f8fafc; margin-bottom: 14px; padding-left: 12px; border-left: 3px solid #38bdf8; }
+  .section-title.red { border-left-color: #f87171; }
+  .section-title.green { border-left-color: #22c55e; }
+  .week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-bottom: 20px; }
+  .day-card { background: #1e293b; border-radius: 10px; padding: 12px 6px; text-align: center; min-height: 80px; }
+  .day-card.hiit { background: linear-gradient(135deg, #dc2626, #991b1b); }
+  .day-card.cardio { background: linear-gradient(135deg, #0ea5e9, #0369a1); }
+  .day-card.strength { background: linear-gradient(135deg, #7c3aed, #5b21b6); }
+  .day-card.rest { background: #1e293b; border: 1px dashed #334155; }
+  .day-name { font-size: 11px; color: #94a3b8; margin-bottom: 4px; }
+  .day-card.hiit .day-name, .day-card.cardio .day-name, .day-card.strength .day-name { color: #fecaca; }
+  .day-card.hiit .day-name { color: #fecaca; }
+  .day-card.cardio .day-name { color: #bae6fd; }
+  .day-card.strength .day-name { color: #ddd6fe; }
+  .day-content { font-size: 13px; font-weight: 700; }
+  .day-sub { font-size: 10px; color: #94a3b8; margin-top: 4px; }
+  .day-card.hiit .day-sub { color: #fecaca; }
+  .day-card.cardio .day-sub { color: #bae6fd; }
+  .day-card.strength .day-sub { color: #ddd6fe; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+  th { background: #1e293b; color: #38bdf8; font-size: 12px; letter-spacing: 0.5px; padding: 10px 12px; text-align: left; }
+  td { padding: 10px 12px; border-bottom: 1px solid #1e293b; font-size: 14px; }
+  tr:hover td { background: rgba(56, 189, 248, 0.05); }
+  .cooldown { background: #1e293b; border-radius: 10px; padding: 16px; display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .cooldown-icon { font-size: 24px; flex-shrink: 0; }
+  .cooldown-text { font-size: 14px; color: #94a3b8; }
+  .cooldown-text strong { color: #fbbf24; }
+  .progress-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px; }
+  .progress-card { background: #1e293b; border-radius: 10px; padding: 14px; text-align: center; border: 1px solid #334155; }
+  .progress-card.current { border-color: #f87171; }
+  .progress-card.target { border-color: #22c55e; }
+  .progress-phase { font-size: 12px; color: #64748b; margin-bottom: 4px; }
+  .progress-weight { font-size: 22px; font-weight: 700; color: #38bdf8; }
+  .progress-card.current .progress-weight { color: #f87171; }
+  .progress-card.target .progress-weight { color: #22c55e; }
+  .progress-time { font-size: 11px; color: #94a3b8; margin-top: 4px; }
+  .rules { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .rule { background: #1e293b; border-radius: 10px; padding: 14px; }
+  .rule-do { border-left: 3px solid #22c55e; }
+  .rule-dont { border-left: 3px solid #ef4444; }
+  .rule-title { font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+  .rule-do .rule-title { color: #22c55e; }
+  .rule-dont .rule-title { color: #ef4444; }
+  .rule-content { font-size: 13px; color: #94a3b8; }
+  .meals { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+  .meal { background: #1e293b; border-radius: 10px; padding: 14px; }
+  .meal-name { font-size: 13px; font-weight: 700; color: #38bdf8; margin-bottom: 6px; }
+  .meal-content { font-size: 13px; color: #cbd5e1; }
+  .meal-cal { font-size: 11px; color: #64748b; margin-top: 4px; }
+  .meal-protein { font-size: 11px; color: #a78bfa; margin-top: 2px; }
+  .note { background: linear-gradient(135deg, #7c3aed22, #0ea5e922); border-radius: 10px; padding: 16px; margin-top: 16px; }
+  .note.red { background: linear-gradient(135deg, #dc262622, #f59e0b22); }
+  .note.green { background: linear-gradient(135deg, #22c55e22, #0ea5e922); }
+  .note-title { font-size: 14px; font-weight: 700; color: #a78bfa; margin-bottom: 8px; }
+  .note.red .note-title { color: #f87171; }
+  .note.green .note-title { color: #22c55e; }
+  .note-content { font-size: 13px; color: #cbd5e1; }
+  .note-content li { margin-bottom: 4px; margin-left: 16px; }
+  .neat-section { background: #1e293b; border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+  .neat-title { font-size: 14px; font-weight: 700; color: #22c55e; margin-bottom: 8px; }
+  .neat-content { font-size: 13px; color: #cbd5e1; }
+  .neat-content li { margin-bottom: 4px; margin-left: 16px; }
+  .calorie-box { background: linear-gradient(135deg, #1e293b, #0f172a); border: 1px solid #334155; border-radius: 10px; padding: 16px; margin-bottom: 16px; text-align: center; }
+  .calorie-label { font-size: 12px; color: #64748b; margin-bottom: 4px; }
+  .calorie-value { font-size: 32px; font-weight: 700; color: #f87171; }
+  .calorie-sub { font-size: 12px; color: #94a3b8; margin-top: 4px; }
+  .timeline { background: #1e293b; border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+  .timeline-row { display: flex; gap: 12px; padding: 6px 0; border-bottom: 1px solid #334155; }
+  .timeline-row:last-child { border-bottom: none; }
+  .timeline-time { font-size: 14px; font-weight: 700; color: #38bdf8; min-width: 60px; }
+  .timeline-desc { font-size: 14px; color: #cbd5e1; }
+  .deload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+  .deload-card { background: #1e293b; border-radius: 10px; padding: 14px; }
+  .deload-card.normal { border: 1px solid #334155; }
+  .deload-card.deload { border: 1px solid #f59e0b; }
+  .deload-label { font-size: 12px; color: #64748b; margin-bottom: 4px; }
+  .deload-value { font-size: 14px; color: #cbd5e1; }
+  .deload-card.deload .deload-value { color: #fbbf24; }
+  .maintain-table td:first-child { font-weight: 700; white-space: nowrap; }
+  .footer { text-align: center; margin-top: 30px; padding: 20px; color: #475569; font-size: 12px; }
+  .protein-highlight { background: #7c3aed33; border-radius: 6px; padding: 2px 6px; color: #a78bfa; font-weight: 600; font-size: 12px; }
+  @media (max-width: 600px) {
+    .week-grid { gap: 4px; }
+    .day-card { padding: 8px 4px; min-height: 70px; }
+    .day-content { font-size: 11px; }
+    .day-sub { font-size: 9px; }
+    .progress-grid { grid-template-columns: repeat(2, 1fr); }
+    .rules, .meals { grid-template-columns: 1fr; }
+    .profile { gap: 12px; }
+    .deload-grid { grid-template-columns: 1fr; }
+    .timeline-row { gap: 8px; }
+    .timeline-time { min-width: 50px; font-size: 13px; }
+    .timeline-desc { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>健身瘦身计划</h1>
+  <p class="subtitle">3个月冲刺版 · 80kg → 70kg · 每周减0.8kg</p>
+  <p class="subtitle2">训练 + 饮食 + 日常消耗，三管齐下 | 练一休一，可持续执行</p>
+
+  <!-- 个人信息 -->
+  <div class="profile">
+    <div class="profile-item">
+      <div class="profile-label">身高</div>
+      <div class="profile-value">170cm</div>
+    </div>
+    <div class="profile-item">
+      <div class="profile-label">当前体重</div>
+      <div class="profile-value warn">80kg</div>
+    </div>
+    <div class="profile-item">
+      <div class="profile-label">BMI</div>
+      <div class="profile-value warn">27.7</div>
+    </div>
+    <div class="profile-item">
+      <div class="profile-label">目标体重</div>
+      <div class="profile-value target">70kg</div>
+    </div>
+    <div class="profile-item">
+      <div class="profile-label">目标周期</div>
+      <div class="profile-value target" style="font-size:18px">12周</div>
+    </div>
+  </div>
+
+  <!-- 每日时间线 -->
+  <div class="section">
+    <div class="section-title">每日时间线</div>
+    <div class="timeline">
+      <div class="timeline-row"><div class="timeline-time">8:40</div><div class="timeline-desc">起床</div></div>
+      <div class="timeline-row"><div class="timeline-time">9:00前</div><div class="timeline-desc">早餐（2蛋+面包+黑咖啡+蛋白粉1勺）</div></div>
+      <div class="timeline-row"><div class="timeline-time">9:30-20:00</div><div class="timeline-desc">上班（午饭后散步15分钟，每小时站5分钟）</div></div>
+      <div class="timeline-row"><div class="timeline-time">12:00</div><div class="timeline-desc">午餐（燃脂鸡胸/牛肉轻食套餐）</div></div>
+      <div class="timeline-row"><div class="timeline-time">15:30</div><div class="timeline-desc">下午加餐（无糖酸奶 或 苹果，选1）</div></div>
+      <div class="timeline-row"><div class="timeline-time">20:30</div><div class="timeline-desc">到家，换衣服直接练</div></div>
+      <div class="timeline-row"><div class="timeline-time">20:35-20:55</div><div class="timeline-desc">训练（训练日）</div></div>
+      <div class="timeline-row"><div class="timeline-time">21:00</div><div class="timeline-desc">蛋白粉1勺 + 轻量晚餐</div></div>
+      <div class="timeline-row"><div class="timeline-time">0:30</div><div class="timeline-desc">睡觉（8小时10分，充足）</div></div>
+    </div>
+  </div>
+
+  <!-- 每周训练 -->
+  <div class="section">
+    <div class="section-title">每周训练 · 练一休一</div>
+    <div class="week-grid">
+      <div class="day-card hiit">
+        <div class="day-name">周一</div>
+        <div class="day-content">HIIT</div>
+        <div class="day-sub">波比+跳绳 15min</div>
+      </div>
+      <div class="day-card rest">
+        <div class="day-name">周二</div>
+        <div class="day-content">休息</div>
+        <div class="day-sub">散步+拉伸</div>
+      </div>
+      <div class="day-card cardio">
+        <div class="day-name">周三</div>
+        <div class="day-content">有氧</div>
+        <div class="day-sub">跳绳 25min</div>
+      </div>
+      <div class="day-card rest">
+        <div class="day-name">周四</div>
+        <div class="day-content">休息</div>
+        <div class="day-sub">散步+拉伸</div>
+      </div>
+      <div class="day-card hiit">
+        <div class="day-name">周五</div>
+        <div class="day-content">HIIT</div>
+        <div class="day-sub">波比+跳绳 15min</div>
+      </div>
+      <div class="day-card strength">
+        <div class="day-name">周六</div>
+        <div class="day-content">力量+有氧</div>
+        <div class="day-sub">自重训练+跳绳 35min</div>
+      </div>
+      <div class="day-card rest">
+        <div class="day-name">周日</div>
+        <div class="day-content">休息</div>
+        <div class="day-sub">散步+拉伸</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 热量缺口 -->
+  <div class="section">
+    <div class="section-title red">每天800kcal缺口怎么来</div>
+    <div class="calorie-box">
+      <div class="calorie-label">每天需要制造的热量缺口</div>
+      <div class="calorie-value">800 kcal</div>
+      <div class="calorie-sub">0.8kg脂肪 ≈ 5600kcal/周 ≈ 800kcal/天</div>
+    </div>
+    <table>
+      <thead><tr><th>来源</th><th>每日贡献</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td>饮食控制</td><td>-600 kcal</td><td>TDEE约2200 - 摄入1500-1600，主力缺口</td></tr>
+        <tr><td>运动消耗</td><td>-200 kcal</td><td>训练日约300-400kcal，日均200</td></tr>
+        <tr><td>日常活动（NEAT）</td><td>-190 kcal</td><td>多走路、多站立、饭后散步</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- HIIT日 -->
+  <div class="section">
+    <div class="section-title">HIIT日 · 周一 / 周五</div>
+    <table>
+      <thead>
+        <tr><th>阶段</th><th>动作</th><th>内容</th><th>休息</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>热身</td><td>慢速无绳跳绳</td><td>2分钟</td><td>-</td></tr>
+        <tr><td>第1轮</td><td>波比跳 → 跳绳</td><td>波比N个 + 跳绳1分钟</td><td>45秒</td></tr>
+        <tr><td>第2轮</td><td>波比跳 → 跳绳</td><td>波比N个 + 跳绳1分钟</td><td>45秒</td></tr>
+        <tr><td>第3轮</td><td>波比跳 → 跳绳</td><td>波比N个 + 跳绳1分钟</td><td>45秒</td></tr>
+        <tr><td>第4轮</td><td>波比跳 → 跳绳</td><td>波比N个 + 跳绳1分钟</td><td>45秒</td></tr>
+        <tr><td>收尾</td><td>慢速无绳跳绳</td><td>2分钟</td><td>-</td></tr>
+      </tbody>
+    </table>
+    <div class="note">
+      <div class="note-title">进阶规则</div>
+      <div class="note-content">
+        <ul>
+          <li><strong>第1-2周（适应期）</strong>：3轮×3-4个波比，休息45秒，约10分钟</li>
+          <li><strong>第3-4周</strong>：4轮×5个波比，休息45秒，约13分钟</li>
+          <li><strong>第5-8周</strong>：6轮×7个波比，休息45秒，约18分钟</li>
+          <li><strong>第9-12周</strong>：6轮×10个波比，休息30秒，约17分钟</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 跳绳日 -->
+  <div class="section">
+    <div class="section-title">有氧日 · 周三 · 25分钟</div>
+    <table>
+      <thead>
+        <tr><th>时间段</th><th>内容</th><th>说明</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>0-2min</td><td>慢跳热身</td><td>微微出汗</td></tr>
+        <tr><td>2-22min</td><td>快跳1分钟 + 慢跳30秒</td><td>循环13组，快跳不用全力</td></tr>
+        <tr><td>22-25min</td><td>慢跳放松</td><td>降心率</td></tr>
+      </tbody>
+    </table>
+    <div class="note">
+      <div class="note-title">进阶规则</div>
+      <div class="note-content">
+        <ul>
+          <li><strong>第1-4周</strong>：快跳1分钟 + 慢跳30秒</li>
+          <li><strong>第5-8周</strong>：快跳1.5分钟 + 慢跳30秒</li>
+          <li><strong>第9-12周</strong>：快跳2分钟 + 慢跳30秒</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 力量日 -->
+  <div class="section">
+    <div class="section-title">力量+有氧日 · 周六 · 35分钟</div>
+    <table>
+      <thead><tr><th>动作</th><th>组数×次数</th><th>针对部位</th><th>要点</th></tr></thead>
+      <tbody>
+        <tr><td>俯卧撑</td><td>4组到力竭</td><td>胸、肩前束、三头</td><td>做不动就跪姿，跪姿不行就推墙</td></tr>
+        <tr><td>反向划船</td><td>3×8-10</td><td>背、二头、后束</td><td>钻桌下抓桌沿，身体挺直拉胸口靠近桌子</td></tr>
+        <tr><td>深蹲</td><td>4×15</td><td>大腿前侧、臀</td><td>膝盖不内扣，蹲到大腿平行地面</td></tr>
+        <tr><td>臀桥</td><td>3×15</td><td>大腿后侧、臀、下背</td><td>仰卧屈膝，臀部顶起，顶峰停2秒</td></tr>
+        <tr><td>平板支撑</td><td>3组到力竭</td><td>核心</td><td>抖了再撑3秒再放</td></tr>
+        <tr><td>弓步蹲</td><td>3×10（每侧）</td><td>腿、臀</td><td>前膝不过脚尖</td></tr>
+        <tr><td>跳绳收尾</td><td>10分钟慢跳</td><td>心肺</td><td>边刷手机边跳，额外消耗</td></tr>
+      </tbody>
+    </table>
+    <div class="note" style="margin-bottom:12px">
+      <div class="note-title">反向划船怎么做（背部唯一训练动作，必做！）</div>
+      <div class="note-content">
+        <ol style="margin-left:16px;margin-bottom:0;">
+          <li>找一张结实的桌子（餐桌/书桌，能承受你体重）</li>
+          <li>钻到桌下，双手抓桌沿，与肩同宽</li>
+          <li>身体挺直，脚跟着地，手臂伸直（起始位）</li>
+          <li>拉胸口靠近桌沿，肩膀后收，感受背部发力</li>
+          <li>缓慢放下，回到起始位</li>
+        </ol>
+        <ul style="margin-left:16px;margin-top:8px;margin-bottom:0;">
+          <li>做不了8个 → 屈膝脚踩地，降低难度</li>
+          <li>太轻松 → 脚垫高，增加难度</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note green">
+      <div class="note-title">为什么要练背？</div>
+      <div class="note-content">久坐10小时本身就让背弱胸紧，只练胸（俯卧撑/波比）不练背会加重圆肩驼背。反向划船+臀桥补上背部和大腿后侧两大缺口，体态才会好看。</div>
+    </div>
+  </div>
+
+  <!-- 前2周适应策略 -->
+  <div class="section">
+    <div class="section-title">前2周适应策略 · 别第1天就上全量</div>
+    <table>
+      <thead><tr><th>项目</th><th>正常量</th><th>前2周调整</th></tr></thead>
+      <tbody>
+        <tr><td>波比每组个数</td><td>5个</td><td>3-4个</td></tr>
+        <tr><td>HIIT轮数</td><td>4轮</td><td>3轮</td></tr>
+        <tr><td>跳绳快跳</td><td>1分钟</td><td>40秒</td></tr>
+        <tr><td>力量组数</td><td>4组</td><td>3组</td></tr>
+      </tbody>
+    </table>
+    <div class="note">
+      <div class="note-content">前2周的目标不是减多少，是让身体不受伤地适应过来。第3周开始恢复到计划的标准量。</div>
+    </div>
+  </div>
+
+  <!-- 最低限度版 -->
+  <div class="section">
+    <div class="section-title">最低限度版 · 实在不想动的时候</div>
+    <div class="cooldown">
+      <div class="cooldown-icon">💤</div>
+      <div class="cooldown-text">波比5个 + 无绳跳绳3分钟，<strong>做完就算</strong>。做了3分钟也比不做强，别因为不完美就跳过。</div>
+    </div>
+  </div>
+
+  <!-- 休息日主动恢复 -->
+  <div class="section">
+    <div class="section-title green">休息日 · 主动恢复（周二/四/日）</div>
+    <p style="color:#94a3b8;font-size:13px;margin-bottom:12px;">不训练，但不建议躺着不动。10-15分钟轻度活动，帮身体恢复更好。</p>
+    <table>
+      <thead><tr><th>项目</th><th>时长</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td>散步</td><td>10-15分钟</td><td>午饭后或晚饭后，刚好算NEAT</td></tr>
+        <tr><td>拉伸</td><td>5分钟</td><td>以下4个动作，每个保持20-30秒</td></tr>
+      </tbody>
+    </table>
+    <div class="note green">
+      <div class="note-title">4个拉伸动作</div>
+      <div class="note-content">
+        <ul>
+          <li><strong>站立体前屈</strong>：膝盖微曲，手尽量触地 → 拉大腿后侧</li>
+          <li><strong>弓步压髋</strong>：前腿90度，后腿膝盖着地，重心前压 → 拉髋屈肌</li>
+          <li><strong>胸部门框拉伸</strong>：手臂抵门框，身体前倾 → 拉胸肩，缓解驼背</li>
+          <li><strong>股四头肌拉伸</strong>：单脚站立，手拉脚踝向臀部 → 拉大腿前侧</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note red" style="margin-top:8px;">
+      <div class="note-content">
+        <strong>休息日不要做：</strong>跳绳/波比/深蹲/跑步/骑车。休息日的心肺负荷会拖慢恢复。肌肉是在休息时生长的。</div>
+    </div>
+  </div>
+
+  <!-- 肌肉酸痛应对 -->
+  <div class="section">
+    <div class="section-title">肌肉酸痛应对</div>
+    <table>
+      <thead><tr><th>方法</th><th>怎么做</th><th>效果</th></tr></thead>
+      <tbody>
+        <tr><td>热敷</td><td>热水澡/热水冲酸痛部位5-10分钟</td><td>促进血液循环，加速恢复</td></tr>
+        <tr><td>轻度活动</td><td>酸痛部位慢走10-15分钟</td><td>动起来比不动恢复快</td></tr>
+        <tr><td>拉伸</td><td>休息日的4个拉伸动作</td><td>缓解肌肉紧绷</td></tr>
+        <tr><td>泡沫轴/手揉</td><td>酸痛部位滚压5分钟，痛点停留20秒</td><td>没有泡沫轴就用手揉</td></tr>
+        <tr><td>多喝水</td><td>每天2.5-3L</td><td>代谢快，恢复快</td></tr>
+      </tbody>
+    </table>
+    <div class="note" style="margin-top:12px">
+      <div class="note-title">哪些酸痛要练，哪些要停？</div>
+      <div class="note-content">
+        <ul>
+          <li><strong>肌肉酸但不影响活动</strong> → 正常练，热身后酸感会减轻</li>
+          <li><strong>关节痛（膝盖/脚踝/肩膀）</strong> → 停止该动作，换替代，这是受伤信号</li>
+          <li><strong>酸到蹲不下/抬不起手</strong> → 当天改纯跳绳有氧，不做力量，缓1-2天</li>
+          <li><strong>小腿前侧疼</strong> → 休息2-3天只散步+拉伸，胫骨前肌炎症，跳绳初期高发</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note" style="margin-top:8px;">
+      <div class="note-title">酸痛时间线</div>
+      <div class="note-content">
+        <ul>
+          <li><strong>训练后第1天</strong>：轻微酸 → 正常，拉伸+热水澡</li>
+          <li><strong>训练后第2天</strong>：最酸 → 散步+拉伸，正好是休息日</li>
+          <li><strong>训练后第3天</strong>：减轻 → 适度训练，热身后会缓解，<strong>这天最关键，别放弃</strong></li>
+          <li><strong>第2周起</strong>：只在训练后有轻微酸 → 基本适应</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEAT -->
+  <div class="section">
+    <div class="section-title green">日常消耗（不用练的减脂）</div>
+    <div class="neat-section">
+      <div class="neat-title">NEAT · 每天多消耗约190kcal</div>
+      <div class="neat-content">
+        <ul>
+          <li><strong>通勤</strong>：提前1站下地铁/公交走路，或骑共享单车（+50kcal）</li>
+          <li><strong>办公</strong>：每坐1小时站5分钟，接水/上厕所/走动（+30kcal）</li>
+          <li><strong>午饭后</strong>：散步15分钟（+40kcal）</li>
+          <li><strong>楼梯</strong>：上下楼走楼梯不坐电梯（+30kcal）</li>
+          <li><strong>晚饭后</strong>：散步15分钟（+40kcal）</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note red">
+      <div class="note-title">这些看起来很碎，但每天加起来 = 多跑20分钟</div>
+      <div class="note-content">不用刻意运动，就是少坐多动。这是你能不能3个月到70kg的关键变量。</div>
+    </div>
+  </div>
+
+  <!-- 饮食 -->
+  <div class="section">
+    <div class="section-title red">饮食计划 · 每日1500-1600kcal</div>
+    <div class="meals">
+      <div class="meal">
+        <div class="meal-name">早餐 9:00前</div>
+        <div class="meal-content">水煮蛋2个 + 全麦面包1片 + 黑咖啡/无糖茶 + <span class="protein-highlight">蛋白粉1勺</span></div>
+        <div class="meal-cal">约350kcal</div>
+        <div class="meal-protein">蛋白质约40g</div>
+      </div>
+      <div class="meal">
+        <div class="meal-name">午餐 12:00</div>
+        <div class="meal-content"><strong>燃脂鸡胸轻食套餐</strong>（3-4天/周）<br>燃脂牛肉轻食套餐（1-2天/周）</div>
+        <div class="meal-cal">约400-500kcal</div>
+        <div class="meal-protein">蛋白质约35-40g</div>
+      </div>
+      <div class="meal">
+        <div class="meal-name">下午加餐 15:30</div>
+        <div class="meal-content">无糖酸奶1杯 或 苹果1个（选1个）</div>
+        <div class="meal-cal">约80kcal</div>
+        <div class="meal-protein">蛋白质约3-5g</div>
+      </div>
+      <div class="meal">
+        <div class="meal-name">训练后+晚餐 21:00</div>
+        <div class="meal-content"><span class="protein-highlight">蛋白粉1勺</span> + 红薯小半个 + 鸡胸100g/2个蛋 + 蔬菜</div>
+        <div class="meal-cal">约450kcal</div>
+        <div class="meal-protein">蛋白质约56g</div>
+      </div>
+    </div>
+    <div style="margin-top:12px">
+      <table>
+        <thead><tr><th>项目</th><th>数值</th></tr></thead>
+        <tbody>
+          <tr><td>每日总热量</td><td>1500-1600 kcal</td></tr>
+          <tr><td>每日蛋白质</td><td>131g+ ✓</td></tr>
+          <tr><td>蛋白质来源分布</td><td>早餐40g + 午餐35g + 加餐5g + 晚餐56g</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="rules" style="margin-top:12px">
+      <div class="rule rule-do">
+        <div class="rule-title">可以吃</div>
+        <div class="rule-content">每天喝水2L+（训练日2.5-3L）、水果1天1个、晚饭碳水最小化、每周1顿欺骗餐（仅周六午餐）</div>
+      </div>
+      <div class="rule rule-dont">
+        <div class="rule-title">不要碰</div>
+        <div class="rule-content">奶茶含糖饮料、薯片饼干蛋糕、宵夜、果汁、油炸食品</div>
+      </div>
+    </div>
+    <div class="note" style="margin-top: 12px;">
+      <div class="note-title">饮食执行要点</div>
+      <div class="note-content">
+        <ul>
+          <li><strong>午餐选轻食套餐</strong>：燃脂鸡胸为主（3-4天/周），燃脂牛肉换口味（1-2天/周），比外卖可控</li>
+          <li><strong>蛋白粉早晚各1勺</strong>：早餐1勺+黑咖啡冲，训练后1勺+水，单次吸收效率最高</li>
+          <li><strong>欺骗餐仅1顿</strong>：周六中午吃想吃的，上限1500kcal，不是放开吃一整天</li>
+          <li><strong>68kJ/100ml饮料</strong>：1天1瓶可以，代糖饮料放心喝，不要当水喝</li>
+          <li><strong>外卖菜用热水涮</strong>：减100-150kcal油，这个动作值很多</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 减载周 -->
+  <div class="section">
+    <div class="section-title">减载周 · 每4周1次</div>
+    <div class="deload-grid">
+      <div class="deload-card normal">
+        <div class="deload-label">正常周（第1-3 / 5-7 / 9-11周）</div>
+        <div class="deload-value">按计划正常执行</div>
+      </div>
+      <div class="deload-card deload">
+        <div class="deload-label">减载周（第4 / 8 / 12周）</div>
+        <div class="deload-value">波比-2个/组，跳绳-10分钟，力量-1组<br>饮食维持不变</div>
+      </div>
+    </div>
+    <div class="note">
+      <div class="note-content">减载不是偷懒，是让身体恢复后冲得更猛。连续4周不休息容易过劳和平台期。</div>
+    </div>
+  </div>
+
+  <!-- 进度目标 -->
+  <div class="section">
+    <div class="section-title red">12周进度目标</div>
+    <div class="progress-grid">
+      <div class="progress-card current">
+        <div class="progress-phase">起点</div>
+        <div class="progress-weight">80kg</div>
+        <div class="progress-time">第0周</div>
+      </div>
+      <div class="progress-card">
+        <div class="progress-phase">第1个月末</div>
+        <div class="progress-weight">77kg</div>
+        <div class="progress-time">第4周 · -3kg</div>
+      </div>
+      <div class="progress-card">
+        <div class="progress-phase">第2个月末</div>
+        <div class="progress-weight">74kg</div>
+        <div class="progress-time">第8周 · -3kg</div>
+      </div>
+      <div class="progress-card target">
+        <div class="progress-phase">第3个月末</div>
+        <div class="progress-weight">70kg</div>
+        <div class="progress-time">第12周 · -4kg</div>
+      </div>
+    </div>
+    <div class="note red">
+      <div class="note-title">体重波动提醒</div>
+      <div class="note-content">
+        <ul>
+          <li>前2周可能掉3-4kg（含水分），不要高兴太早，后面会慢下来</li>
+          <li>第3-4周可能出现平台期，正常，不要调整计划</li>
+          <li>每周一早晨空腹称重，连续2周不掉再考虑调整</li>
+          <li>某天吃多了不要自暴自弃，第二天正常执行就行</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 12周后维持 -->
+  <div class="section">
+    <div class="section-title green">12周后 · 维持期</div>
+    <table class="maintain-table">
+      <thead><tr><th>项目</th><th>减脂期</th><th>维持期</th></tr></thead>
+      <tbody>
+        <tr><td>训练</td><td>4天/周</td><td>3天/周（减1个HIIT或有氧）</td></tr>
+        <tr><td>热量</td><td>1500-1600kcal</td><td>1800-2000kcal（每周+100逐步加回）</td></tr>
+        <tr><td>蛋白质</td><td>131g+/天</td><td>100g+/天</td></tr>
+        <tr><td>欺骗餐</td><td>周六午餐1顿</td><td>灵活1-2顿/周</td></tr>
+        <tr><td>体重监测</td><td>每周称1次</td><td>每周称1次，连续2周涨超1kg就收紧1周</td></tr>
+      </tbody>
+    </table>
+    <div class="note">
+      <div class="note-content">减到70kg后不能直接恢复旧习惯，否则必反弹。用维持期过渡，让身体适应新体重。</div>
+    </div>
+  </div>
+
+  <!-- 装备 -->
+  <div class="section">
+    <div class="section-title">所需装备</div>
+    <table>
+      <thead><tr><th>装备</th><th>用途</th><th>预算</th></tr></thead>
+      <tbody>
+        <tr><td>无绳跳绳</td><td>有氧+HIIT</td><td>30-80元</td></tr>
+        <tr><td>瑜伽垫</td><td>波比跳落地缓冲</td><td>30-60元</td></tr>
+        <tr><td>乳清蛋白粉</td><td>补充蛋白质（早晚各1勺）</td><td>150-300元/月</td></tr>
+        <tr><td>运动鞋</td><td>保护膝盖</td><td>有就行</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 核心提醒 -->
+  <div class="section">
+    <div class="section-title">核心提醒</div>
+    <div class="note">
+      <div class="note-content">
+        <ul>
+          <li><strong>回家进门先练</strong>，坐沙发上就起不来了，20分钟搞定再吃晚饭</li>
+          <li><strong>波比落地必须屈膝</strong>，膝盖是弹簧不是柱子</li>
+          <li><strong>膝盖不舒服立刻停</strong>，换纯跳绳日，不硬扛</li>
+          <li><strong>小腿前侧疼</strong>（胫骨前肌），立刻减量休息2-3天，跳绳初期常见</li>
+          <li><strong>午餐选燃脂轻食套餐</strong>，省事又控量，鸡胸为主牛肉换口味</li>
+          <li><strong>蛋白粉早1勺+训练后1勺</strong>，单次吸收效率最高</li>
+          <li><strong>多走路少坐</strong>，NEAT是不训练时也在减脂的秘密</li>
+          <li><strong>做了3分钟也算完成</strong>，做得烂也比不做好</li>
+          <li><strong>最酸的是训练后第2天</strong>，扛过去第3天练开就好多了，第3天最关键别放弃</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    3个月冲刺版 · 80kg → 70kg · 练一休一 · 每日1500-1600kcal · 坚持就是赢
+  </div>
+
+</div>
+</body>
+</html>
